@@ -1,0 +1,50 @@
+h1 {
+  text-align: center;
+}
+
+.control input {
+  display: flex;
+  width: 350px;
+  border: 1px solid gray;
+  font-size: 18px;
+  margin-left: 40px;
+  margin-right: 40px;
+  border-radius: 5px;
+  height: 40px;
+}
+
+.list ul {
+  list-style: none;
+}
+
+.list li {
+  font-size: large;
+  margin-right: 40px;
+  font-weight: 600;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list li:hover {
+  background-color: rgb(232, 229, 229);
+}
+.list li:active,
+.list button:active {
+  transform: scale(1.1);
+}
+
+.list button {
+  background-color: rgb(8, 132, 209);
+  font-size: 90%;
+  color: white;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 10px;
+}
+
+.list button:hover {
+  background-color: blue;
+  cursor: pointer;
+}

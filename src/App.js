@@ -11,7 +11,6 @@ function App() {
   const [currentParty, setCurrentParty] = useState([]);
   const [currentDetail, setCurrentDetail] = useState([]);
   const [isDisabled, setIsDisabled] = useState([]);
-  const [disableAll, setDisableAll] = useState(false);
 
   useEffect(() => {
     const pokemons = [];
@@ -55,9 +54,6 @@ function App() {
         setIsDisabled((curr) => [...curr, pokemonId]);
       }
     }
-    if (currentParty.length === 6) {
-      setDisableAll(true);
-    }
   };
   const seeDetailsHandler = (pokemonId) => {
     const pokemonDetail = loadedPokemons.find(
@@ -84,7 +80,6 @@ function App() {
         onName={seeDetailsHandler}
         currentParty={currentParty}
         isDisabled={isDisabled}
-        disabledAll={disableAll}
       />
       <PokemonSelect
         pokemon={currentDetail}

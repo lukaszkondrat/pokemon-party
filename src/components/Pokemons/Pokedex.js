@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Card from "../UI/Card";
 
 import classes from "./Pokedex.module.css";
 
 const Pokedex = (props) => {
-  const [pokemons, setPokemons] = useState(props.pokemons);
+  const [pokemons, setPokemons] = useState([]);
+
+  useEffect(() => {
+    setPokemons(props.pokemons);
+  }, [props.pokemons]);
 
   const addPokemonHandler = (event) => {
     const addedPokemonId = event.target.parentElement.value;
@@ -39,7 +43,25 @@ const Pokedex = (props) => {
               <div onClick={pokemonDetailsHandler}>
                 {el.name.toUpperCase().slice(0, 1) + el.name.slice(1)}
               </div>
-              <button onClick={addPokemonHandler}>ADD</button>
+
+              {props.isDisabled.includes(Number(el.id)) && (
+                <button
+                  id={el.id}
+                  className={classes.inactive}
+                  onClick={addPokemonHandler}
+                >
+                  ADD
+                </button>
+              )}
+              {!props.isDisabled.includes(Number(el.id)) && (
+                <button
+                  id={el.id}
+                  className={classes.active}
+                  onClick={addPokemonHandler}
+                >
+                  ADD
+                </button>
+              )}
             </li>
           ))}
         </ul>

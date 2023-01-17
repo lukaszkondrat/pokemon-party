@@ -1,10 +1,12 @@
 .card {
-  width: 90%;
-  flex: 1;
-  padding: 10px;
-  margin: 20px;
+  min-width: 410px;
+  /* flex: 1; */
+  flex-wrap: wrap;
+  padding: 20px;
+  margin: 25px;
 
+  border: 1px solid rgba(75, 73, 73, 0.762);
   background-color: white;
-  border-radius: 5px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
 }

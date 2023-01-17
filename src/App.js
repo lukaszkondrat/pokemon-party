@@ -10,6 +10,8 @@ function App() {
   const [loadedPokemons, setLoadedPokemons] = useState([]);
   const [currentParty, setCurrentParty] = useState([]);
   const [currentDetail, setCurrentDetail] = useState([]);
+  const [isDisabled, setIsDisabled] = useState([]);
+  const [disableAll, setDisableAll] = useState(false);
 
   useEffect(() => {
     const pokemons = [];
@@ -26,6 +28,16 @@ function App() {
               Number(key) + 1
             }.png`,
           };
+          fetch(`https://pokeapi.co/api/v2/pokemon/${Number(key) + 1}`)
+            .then((response) => {
+              return response.json();
+            })
+            .then((data) => {
+              pokemon.types = [
+                data.types[0].type.name,
+                data.types[1]?.type.name,
+              ];
+            });
           pokemons.push(pokemon);
         }
         setLoadedPokemons(pokemons);
@@ -36,7 +48,16 @@ function App() {
     const partyPokemon = loadedPokemons.filter(
       (el) => pokemonId === Number(el.id)
     );
-    setCurrentParty(partyPokemon);
+
+    if (currentParty.length < 6) {
+      if (!currentParty.includes(partyPokemon[0])) {
+        setCurrentParty((currParty) => [...currParty, partyPokemon[0]]);
+        setIsDisabled((curr) => [...curr, pokemonId]);
+      }
+    }
+    if (currentParty.length === 6) {
+      setDisableAll(true);
+    }
   };
   const seeDetailsHandler = (pokemonId) => {
     const pokemonDetail = loadedPokemons.find(
@@ -45,15 +66,38 @@ function App() {
     setCurrentDetail([pokemonDetail]);
   };
 
+  const seePartyDetailsHandler = (name) => {
+    const pokemonDetail = loadedPokemons.filter((el) => el.name === name);
+    setCurrentDetail(pokemonDetail);
+  };
+
+  const removeFromPartyHandler = (filteredParty, id) => {
+    setCurrentParty(filteredParty);
+    setIsDisabled((curr) => curr.filter((el) => el !== id));
+  };
+
   return (
     <div className={classes.container}>
       <Pokedex
         pokemons={loadedPokemons}
         onAdd={addToPartyHandler}
         onName={seeDetailsHandler}
+        currentParty={currentParty}
+        isDisabled={isDisabled}
+        disabledAll={disableAll}
       />
-      <PokemonSelect pokemon={currentDetail} />
-      <CurrentParty pokemons={currentParty} />
+      <PokemonSelect
+        pokemon={currentDetail}
+        currentParty={currentParty}
+        onAdd={addToPartyHandler}
+        onRemove={removeFromPartyHandler}
+        isDisabled={isDisabled}
+      />
+      <CurrentParty
+        pokemons={currentParty}
+        onRemove={removeFromPartyHandler}
+        onDetail={seePartyDetailsHandler}
+      />
     </div>
   );
 }

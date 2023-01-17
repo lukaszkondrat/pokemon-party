@@ -1,6 +1,5 @@
 .card2 {
   min-width: 410px;
-  /* flex-wrap: wrap; */
   height: 385px;
   padding: 20px;
   margin: 25px;
@@ -18,8 +17,6 @@ h1 {
 .list li {
   height: 100px;
   display: flex;
-  /* justify-content: space-between; */
-  /* align-items: center; */
 }
 
 .list h3 {
